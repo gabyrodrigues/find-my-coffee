@@ -85,7 +85,7 @@ const Establishment = (props) => {
             <hr />
 
             <Paragraph>
-                {establishment.formated_address}
+                {establishment.formatted_address}
             </Paragraph>
 
             <Ratings place={props.place} />
