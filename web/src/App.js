@@ -4,6 +4,8 @@ import EstablishmentsService from './services/establishmentsService';
 
 import Establishment from './components/Establishment';
 
+import NearestCoffees from './components/NearestCoffees';
+
 function App() {
 	const { REACT_APP_GOOGLE_KEY } = process.env;
 
@@ -66,6 +68,10 @@ function App() {
 						animation="2"
 						position={{ lat: latitude, lng: longitude }}
 					/>
+
+					{(latitude != 0 && longitude != 0) &&
+						<NearestCoffees latitude={latitude} longitude={longitude} />
+					}
 				</GoogleMap>
 			</LoadScript>
 		</>
