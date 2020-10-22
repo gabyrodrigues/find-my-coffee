@@ -28,6 +28,7 @@ const Paragraph = styled.p`
 
 const Image = styled.img`
     height: 150px;
+    object-fit: cover;
     width: 100%;
 `;
 
@@ -52,13 +53,9 @@ const Establishment = (props) => {
         <LeftBar>
             {
                 (establishment.photos) ?
-                    <Image
-                        src={
-                            `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&
-                            photoreference=${establishment.photos[0].photo_reference}&sensor=false&
-                            key=${REACT_APP_GOOGLE_KEY}`
-                        }
-                        alt="Coffee photo"
+                    <Image src={`
+                        https://maps.googleapis.com/maps/api/place/photo?photoreference=${establishment.photos[0].photo_reference}&key=${REACT_APP_GOOGLE_KEY}&maxwidth=400
+                        `} alt="Coffee Photo"
                     />
                     :
                     <Image src="/images/no_photo.jpg" alt="Coffee no photo" />
