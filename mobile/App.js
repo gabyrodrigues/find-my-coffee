@@ -3,11 +3,14 @@ import { Alert, StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 
+import EstablishmentsService from './src/services/establishmentsService';
+
 import imgPin from './src/images/my-location-pin.png';
 
 export default function App() {
 	const [latitude, setLatitude] = useState(0);
 	const [longitude, setLongitude] = useState(0);
+	const [locations, setLocations] = useState([]);
 
 	useEffect(() => {
 		(async () => {
@@ -20,8 +23,19 @@ export default function App() {
 				setLatitude(location.coords.latitude);
 				setLongitude(location.coords.longitude);
 			}
- 		})();
+		 })();
+		 
+		 loadCoffeeShops();
 	}, []);
+
+	async function loadCoffeeShops() {
+		try {
+			const response = await EstablishmentsService.index(latitude, longitude);
+			setLocations(response.data.results);
+	   } catch (error) {
+			setLocations([]);
+	   }
+   }
 
 	return (
 		<View style={styles.container}>
@@ -42,6 +56,19 @@ export default function App() {
 						longitude: longitude
 					}}
 				/>
+
+				{locations.map(item => {
+					return (
+						<Marker key={item.place_id}
+							icon={require('./src/images/coffee-big-pin.png')}
+							coordinate={{
+								latitude: item.geometry.location.lat,
+								longitude: item.geometry.location.lng
+							}}
+							title={item.name}
+						/>
+					);
+				})}	
 			</MapView>
 		</View>
 	);
