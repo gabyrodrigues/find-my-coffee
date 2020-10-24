@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Button, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import EstablishmentService from '../../services/establishmentsService';
 
+import ListRatings from './ListRatings';
+
 const Separator = () => (
     <View style={styles.separator} />
 );
@@ -27,7 +29,7 @@ const Establishment = (props) => {
         <View style={styles.container}>
             {establishment != null &&
                 <View style={styles.background}>
-                    <ScrollView style={{ height: 600 }}>
+                    <ScrollView style={{ height: 500 }}>
                         <View style={{ marginHorizontal: 30 }}>
                             <View style={{ alignSelf: 'flex-end' }}>
                                 <Button title="X" color="black" onPress={() => setEstablishment(null)} />
@@ -78,6 +80,8 @@ const Establishment = (props) => {
                             <Text style={{ color: 'white' }}>{establishment.formatted_address}</Text>
 
                             <Separator />
+
+                            <ListRatings place={props.place} />
                         </View>
                     </ScrollView>
 
@@ -97,7 +101,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 40,
         width: '80%',
-        zIndex: 1
+        zIndex: 2
     },
     background: {
         backgroundColor: 'black',

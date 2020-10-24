@@ -3,11 +3,12 @@ import { Alert, StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 
-import EstablishmentsService from './src/services/establishmentsService';
+import EstablishmentsService from './services/establishmentsService';
 
-import imgPin from './src/images/my-location-pin.png';
+import imgPin from './images/my-location-pin.png';
 
-import Establishment from './src/components/Establishment';
+import Establishment from './components/Establishment';
+import NearestCoffees from './components/NearestCoffees';
 
 export default function App() {
 	const [latitude, setLatitude] = useState(0);
@@ -42,6 +43,7 @@ export default function App() {
 
 	return (
 		<View style={styles.container}>
+			<NearestCoffees latitude={latitude} longitude={longitude} />
 			{(selected) && <Establishment place={selected} />}
 
 			<MapView 
@@ -65,7 +67,7 @@ export default function App() {
 				{locations.map(item => {
                    	return (
 						 <Marker key={item.place_id}
-						 	icon={require('./src/images/coffee-big-pin.png')}
+						 	icon={require('./images/coffee-big-pin.png')}
                        		coordinate={{
                                	latitude: item.geometry.location.lat,
                               	 longitude: item.geometry.location.lng
