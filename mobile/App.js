@@ -7,10 +7,13 @@ import EstablishmentsService from './src/services/establishmentsService';
 
 import imgPin from './src/images/my-location-pin.png';
 
+import Establishment from './src/components/Establishment';
+
 export default function App() {
 	const [latitude, setLatitude] = useState(0);
 	const [longitude, setLongitude] = useState(0);
 	const [locations, setLocations] = useState([]);
+	const [selected, setSelected] = useState(null);
 
 	useEffect(() => {
 		(async () => {
@@ -39,6 +42,8 @@ export default function App() {
 
 	return (
 		<View style={styles.container}>
+			{(selected) && <Establishment place={selected} />}
+
 			<MapView 
 				style={styles.map}
 				region = {{
@@ -58,17 +63,18 @@ export default function App() {
 				/>
 
 				{locations.map(item => {
-					return (
-						<Marker key={item.place_id}
-							icon={require('./src/images/coffee-big-pin.png')}
-							coordinate={{
-								latitude: item.geometry.location.lat,
-								longitude: item.geometry.location.lng
-							}}
+                   	return (
+						 <Marker key={item.place_id}
+						 	icon={require('./src/images/coffee-big-pin.png')}
+                       		coordinate={{
+                               	latitude: item.geometry.location.lat,
+                              	 longitude: item.geometry.location.lng
+                          	}}
 							title={item.name}
-						/>
-					);
-				})}	
+							onPress={() => setSelected(item)}
+                     	/>
+                  	);
+              	})}
 			</MapView>
 		</View>
 	);
